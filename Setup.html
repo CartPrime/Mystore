@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure Your Store - StoreBuilder</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen py-10 px-4">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Top Header -->
+        <div class="text-center mb-8">
+            <div class="flex justify-center items-center space-x-2 mb-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-indigo-600 text-3xl"></i>
+                <h1 class="text-3xl font-extrabold text-gray-900">Setup Your Custom Store</h1>
+            </div>
+            <p class="text-gray-600">Enter your store details and choose your preferred design template.</p>
+        </div>
+
+        <form id="storeSetupForm" onsubmit="saveStoreSetup(event)" class="space-y-8">
+            
+            <!-- Step 1: Basic Store Info -->
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fa-solid fa-store text-indigo-600 mr-3"></i> 1. Basic Store Details
+                </h2>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Store Name *</label>
+                        <input type="text" id="storeName" required placeholder="e.g. TrendCart Kerala" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Tagline / Subtitle</label>
+                        <input type="text" id="storeTagline" placeholder="e.g. Best Quality Accessories" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Store Category *</label>
+                        <select id="storeCategory" required class="w-full px-4 py-2.5 border rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="">Select Category</option>
+                            <option value="Fashion & Clothing">Fashion & Clothing</option>
+                            <option value="Electronics & Gadgets">Electronics & Gadgets</option>
+                            <option value="Home & Kitchen">Home & Kitchen</option>
+                            <option value="Beauty & Cosmetics">Beauty & Cosmetics</option>
+                            <option value="General Store">General Reselling Store</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Logo URL / Image Link</label>
+                        <input type="url" id="storeLogo" placeholder="https://example.com/logo.png" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Contact & Checkout Configuration -->
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fa-solid fa-address-card text-indigo-600 mr-3"></i> 2. Order & Payment Settings
+                </h2>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">WhatsApp Number for Order Alerts *</label>
+                        <input type="tel" id="whatsappNo" required placeholder="10-digit phone number" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Store Owner Email</label>
+                        <input type="email" id="ownerEmail" placeholder="yourmail@gmail.com" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">UPI ID (For Buyer Payments)</label>
+                        <input type="text" id="upiId" placeholder="yourname@upi / GPay No" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Payment Method Allowed</label>
+                        <select id="paymentOptions" class="w-full px-4 py-2.5 border rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="Cash on Delivery & Online UPI">Cash on Delivery + Online UPI</option>
+                            <option value="Cash on Delivery Only">Cash on Delivery Only</option>
+                            <option value="Online Payment Only">Online Payment Only</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Template Selection -->
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-2 flex items-center">
+                    <i class="fa-solid fa-palette text-indigo-600 mr-3"></i> 3. Choose Store Template Design
+                </h2>
+                <p class="text-sm text-gray-500 mb-6">Select how your customers will see your storefront layout.</p>
+
+                <div class="grid sm:grid-cols-3 gap-6">
+                    <!-- Template Option 1 -->
+                    <label class="relative block border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-indigo-500 transition template-card">
+                        <input type="radio" name="selectedTemplate" value="modern" checked class="hidden peer">
+                        <div class="peer-checked:border-indigo-600 peer-checked:ring-2 peer-checked:ring-indigo-500 absolute inset-0 rounded-xl pointer-events-none"></div>
+                        <div class="h-28 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600 mb-3">
+                            <i class="fa-solid fa-bag-shopping text-3xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Modern Grid</h3>
+                        <p class="text-xs text-gray-500 mt-1">Clean grid layout, ideal for clothing and general reselling.</p>
+                    </label>
+
+                    <!-- Template Option 2 -->
+                    <label class="relative block border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-indigo-500 transition template-card">
+                        <input type="radio" name="selectedTemplate" value="minimal" class="hidden peer">
+                        <div class="peer-checked:border-indigo-600 peer-checked:ring-2 peer-checked:ring-indigo-500 absolute inset-0 rounded-xl pointer-events-none"></div>
+                        <div class="h-28 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 mb-3">
+                            <i class="fa-solid fa-list-check text-3xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Single Column</h3>
+                        <p class="text-xs text-gray-500 mt-1">Fast mobile-first list layout for quick checkout.</p>
+                    </label>
+
+                    <!-- Template Option 3 -->
+                    <label class="relative block border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-indigo-500 transition template-card">
+                        <input type="radio" name="selectedTemplate" value="dark" class="hidden peer">
+                        <div class="peer-checked:border-indigo-600 peer-checked:ring-2 peer-checked:ring-indigo-500 absolute inset-0 rounded-xl pointer-events-none"></div>
+                        <div class="h-28 bg-gray-900 text-yellow-400 rounded-lg flex items-center justify-center mb-3">
+                            <i class="fa-solid fa-bolt text-3xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900">Dark Tech Edition</h3>
+                        <p class="text-xs text-gray-500 mt-1">Bold dark mode theme for gadgets and electronics.</p>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+                    Save Setup & Build Store <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function saveStoreSetup(e) {
+            e.preventDefault();
+
+            const selectedTemplate = document.querySelector('input[name="selectedTemplate"]:checked').value;
+            
+            const storeConfig = {
+                storeName: document.getElementById('storeName').value,
+                tagline: document.getElementById('storeTagline').value,
+                category: document.getElementById('storeCategory').value,
+                logo: document.getElementById('storeLogo').value,
+                whatsapp: document.getElementById('whatsappNo').value,
+                email: document.getElementById('ownerEmail').value,
+                upiId: document.getElementById('upiId').value,
+                paymentMode: document.getElementById('paymentOptions').value,
+                template: selectedTemplate
+            };
+
+            // LocalStorage-il data save cheyyunnu
+            localStorage.setItem('userStoreConfig', JSON.stringify(storeConfig));
+
+            alert(`Store Configuration Saved Successfully!\n\nStore Name: ${storeConfig.storeName}\nTemplate: ${storeConfig.template.toUpperCase()}`);
+            
+            // Redirection to Dashboard / Admin Panel
+            // window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
