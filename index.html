@@ -20,11 +20,10 @@
             <nav class="hidden md:flex space-x-8 font-medium text-gray-600">
                 <a href="#features" class="hover:text-indigo-600">Features</a>
                 <a href="#pricing" class="hover:text-indigo-600">Pricing</a>
-                <a href="#faq" class="hover:text-indigo-600">FAQ</a>
             </nav>
             <div>
-                <a href="#register" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-lg shadow-md transition">
-                    Create Store
+                <a href="#pricing" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-lg shadow-md transition">
+                    Get Started
                 </a>
             </div>
         </div>
@@ -50,12 +49,48 @@
         </div>
     </section>
 
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Everything You Need to Succeed</h2>
+                <p class="text-gray-600 mt-2">Simple tools made for dropshippers and online resellers.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 border border-gray-100 rounded-xl bg-gray-50 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Fast Store Setup</h3>
+                    <p class="text-gray-600">Pick a plan, customize your store details and template, and go live quickly.</p>
+                </div>
+
+                <div class="p-6 border border-gray-100 rounded-xl bg-gray-50 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-boxes-packing"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Clear Product Limits</h3>
+                    <p class="text-gray-600">Start with up to 1,500 products on Small Store and scale up as you grow.</p>
+                </div>
+
+                <div class="p-6 border border-gray-100 rounded-xl bg-gray-50 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Direct Order Flow</h3>
+                    <p class="text-gray-600">Receive order alerts on WhatsApp or email and manage buyer payments smoothly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section id="pricing" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-gray-900">Affordable Pricing Plans</h2>
-                <p class="text-gray-600 mt-2">Pick the plan that works best for your business.</p>
+                <p class="text-gray-600 mt-2">Select a plan to continue straight to your store setup page.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -69,7 +104,7 @@
                         <p class="text-gray-500 text-xs mt-1">Pay once, use forever</p>
                         <div class="my-5">
                             <span class="text-4xl font-extrabold text-gray-900">₹15</span>
-                            <span class="text-gray-500 font-medium"> / lifetime</span>
+                            <span class="text-gray-500 font-medium"> / one-time</span>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-600 mb-6">
                             <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2.5"></i> Up to <b>1,500 Products</b></li>
@@ -78,7 +113,7 @@
                             <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2.5"></i> Direct Order Alerts</li>
                         </ul>
                     </div>
-                    <button onclick="selectPlan('Small Store - ₹15 (One-Time)', 15)" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2.5 rounded-xl transition">
+                    <button onclick="goToSetup('Small Store', 15, 'One-Time', 1500)" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2.5 rounded-xl transition">
                         Select Small Store
                     </button>
                 </div>
@@ -102,7 +137,7 @@
                             <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2.5"></i> Analytics Dashboard</li>
                         </ul>
                     </div>
-                    <button onclick="selectPlan('Big Store - ₹99/mo', 99)" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl transition shadow">
+                    <button onclick="goToSetup('Big Store', 99, 'Monthly', 5000)" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl transition shadow">
                         Select Big Store
                     </button>
                 </div>
@@ -123,51 +158,10 @@
                             <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2.5"></i> VIP Technical Support</li>
                         </ul>
                     </div>
-                    <button onclick="selectPlan('Large Store - ₹199/mo', 199)" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2.5 rounded-xl transition">
+                    <button onclick="goToSetup('Large Store', 199, 'Monthly', 'Unlimited')" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2.5 rounded-xl transition">
                         Select Large Store
                     </button>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Registration Section -->
-    <section id="register" class="py-16 bg-white">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-900 text-center mb-2">Create Your Store Account</h2>
-                <p class="text-gray-600 text-center text-sm mb-8">Fill in details below to register your store.</p>
-
-                <form id="signupForm" onsubmit="handleRegistration(event)" class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Your Name</label>
-                        <input type="text" id="userName" required placeholder="Enter full name" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    </div>
-
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Mobile / WhatsApp</label>
-                            <input type="tel" id="userPhone" required placeholder="WhatsApp number" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Store Name</label>
-                            <input type="text" id="storeName" required placeholder="e.g. TrendCart" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Selected Plan</label>
-                        <select id="selectedPlan" class="w-full px-4 py-2.5 border rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                            <option value="Small Store - ₹15 (One-Time)">Small Store - ₹15 (One-Time / 1,500 Products)</option>
-                            <option value="Big Store - ₹99/mo">Big Store - ₹99/month (5,000 Products)</option>
-                            <option value="Large Store - ₹199/mo">Large Store - ₹199/month (Unlimited)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-lg shadow transition text-lg mt-4">
-                        Proceed to Payment & Activate
-                    </button>
-                </form>
             </div>
         </div>
     </section>
@@ -177,22 +171,18 @@
         <p>&copy; 2026 StoreBuilder Platform. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript Handling -->
+    <!-- Redirect to Setup Page with Selected Plan -->
     <script>
-        function selectPlan(planText, price) {
-            document.getElementById('selectedPlan').value = planText;
-            document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
-        }
+        function goToSetup(planName, price, billingType, productLimit) {
+            const selectedPlanData = {
+                planName: planName,
+                price: price,
+                billingType: billingType,
+                productLimit: productLimit
+            };
 
-        function handleRegistration(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('userName').value;
-            const phone = document.getElementById('userPhone').value;
-            const store = document.getElementById('storeName').value;
-            const plan = document.getElementById('selectedPlan').value;
-
-            alert(`Thank you ${name}!\nStore Name: ${store}\nSelected Plan: ${plan}\n\nRedirecting to UPI Payment...`);
+            localStorage.setItem('selectedPlanData', JSON.stringify(selectedPlanData));
+            window.location.href = 'setup.html';
         }
     </script>
 </body>
