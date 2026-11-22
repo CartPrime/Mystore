@@ -12,21 +12,43 @@
 
     <div class="max-w-4xl mx-auto">
         <!-- Top Header -->
-        <div class="text-center mb-8">
+        <div class="text-center mb-6">
             <div class="flex justify-center items-center space-x-2 mb-2">
                 <i class="fa-solid fa-wand-magic-sparkles text-indigo-600 text-3xl"></i>
                 <h1 class="text-3xl font-extrabold text-gray-900">Setup Your Custom Store</h1>
             </div>
-            <p class="text-gray-600">Enter your store details and choose your preferred design template.</p>
+            <p class="text-gray-600">Fill in your store details, upload your logo, and choose a design template.</p>
+        </div>
+
+        <!-- Selected Plan & Trust Banner -->
+        <div class="bg-white border border-indigo-100 rounded-2xl p-4 sm:p-5 shadow-sm mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
+                    Selected Plan
+                </span>
+                <h2 id="activePlanTitle" class="text-lg font-extrabold text-gray-900 mt-2">
+                    Small Store — ₹15 (One-Time)
+                </h2>
+                <p id="activePlanLimit" class="text-sm text-gray-600">
+                    Product Limit: Up to 1,500 Products • No hidden setup charges
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-4 py-2.5 rounded-xl">
+                <i class="fa-solid fa-shield-check text-base"></i>
+                <span>Transparent Limits • Direct Store Ownership</span>
+            </div>
         </div>
 
         <form id="storeSetupForm" onsubmit="saveStoreSetup(event)" class="space-y-8">
             
             <!-- Step 1: Basic Store Info -->
             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fa-solid fa-store text-indigo-600 mr-3"></i> 1. Basic Store Details
-                </h2>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fa-solid fa-store text-indigo-600 mr-3"></i> 1. Basic Store Details
+                    </h2>
+                    <span class="text-xs text-gray-500">Step 1 of 3</span>
+                </div>
 
                 <div class="grid sm:grid-cols-2 gap-5">
                     <div>
@@ -51,18 +73,31 @@
                         </select>
                     </div>
 
+                    <!-- Logo Upload Box -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Logo URL / Image Link</label>
-                        <input type="url" id="storeLogo" placeholder="https://example.com/logo.png" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Upload Store Logo (PNG, JPG, WEBP)</label>
+                        <div class="flex items-center gap-4">
+                            <div id="logoPreviewBox" class="w-14 h-14 rounded-xl border border-dashed border-gray-300 bg-gray-50 flex items-center justify-center overflow-hidden shrink-0">
+                                <i id="logoPlaceholderIcon" class="fa-solid fa-image text-gray-400 text-xl"></i>
+                                <img id="logoPreviewImg" src="" alt="Logo Preview" class="w-full h-full object-cover hidden">
+                            </div>
+                            <div class="flex-1">
+                                <input type="file" id="logoFileInput" accept="image/png, image/jpeg, image/webp, image/gif" onchange="handleLogoUpload(event)" class="block w-full text-xs text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                                <p id="logoStatusText" class="text-[11px] text-gray-500 mt-1">Recommended: Square image under 500 KB.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Step 2: Contact & Checkout Configuration -->
             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fa-solid fa-address-card text-indigo-600 mr-3"></i> 2. Order & Payment Settings
-                </h2>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fa-solid fa-address-card text-indigo-600 mr-3"></i> 2. Order & Payment Settings
+                    </h2>
+                    <span class="text-xs text-gray-500">Step 2 of 3</span>
+                </div>
 
                 <div class="grid sm:grid-cols-2 gap-5">
                     <div>
@@ -93,10 +128,13 @@
 
             <!-- Step 3: Template Selection -->
             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
-                <h2 class="text-xl font-bold text-gray-900 mb-2 flex items-center">
-                    <i class="fa-solid fa-palette text-indigo-600 mr-3"></i> 3. Choose Store Template Design
-                </h2>
-                <p class="text-sm text-gray-500 mb-6">Select how your customers will see your storefront layout.</p>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fa-solid fa-palette text-indigo-600 mr-3"></i> 3. Choose Store Template Design
+                    </h2>
+                    <span class="text-xs text-gray-500">Step 3 of 3</span>
+                </div>
+                <p class="text-sm text-gray-500 mb-6">Select how your customers will see your storefront layout. You can update this later.</p>
 
                 <div class="grid sm:grid-cols-3 gap-6">
                     <!-- Template Option 1 -->
@@ -134,6 +172,19 @@
                 </div>
             </div>
 
+            <!-- Trust & Clarity Box before Submit -->
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-5 text-sm text-gray-700 space-y-2">
+                <div class="font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-indigo-600"></i>
+                    <span>What happens next?</span>
+                </div>
+                <ul class="space-y-1.5 text-xs sm:text-sm text-gray-600">
+                    <li>• Your store branding, WhatsApp/UPI details, and template choice are saved for your storefront setup.</li>
+                    <li>• Your selected plan's product limit and billing terms stay visible—no surprise deductions.</li>
+                    <li>• You control your product listings, pricing margins, and buyer payment preferences.</li>
+                </ul>
+            </div>
+
             <!-- Submit Button -->
             <div class="text-center">
                 <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
@@ -144,16 +195,76 @@
     </div>
 
     <script>
+        let uploadedLogoData = '';
+        let uploadedLogoName = '';
+
+        // Load selected plan from index.html if available
+        window.addEventListener('DOMContentLoaded', () => {
+            const rawPlan = localStorage.getItem('selectedPlanData');
+            if (rawPlan) {
+                try {
+                    const plan = JSON.parse(rawPlan);
+                    const billingLabel = plan.billingType === 'One-Time' ? '(One-Time)' : '/ month';
+                    document.getElementById('activePlanTitle').textContent =
+                        `${plan.planName} — ₹${plan.price} ${billingLabel}`;
+
+                    const limitText = plan.productLimit === 'Unlimited'
+                        ? 'Unlimited Products'
+                        : `Up to ${Number(plan.productLimit).toLocaleString()} Products`;
+
+                    document.getElementById('activePlanLimit').textContent =
+                        `Product Limit: ${limitText} • Clear terms, no hidden setup fees`;
+                } catch (err) {
+                    console.error('Could not parse plan data:', err);
+                }
+            }
+        });
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            const statusEl = document.getElementById('logoStatusText');
+            const previewImg = document.getElementById('logoPreviewImg');
+            const placeholderIcon = document.getElementById('logoPlaceholderIcon');
+
+            if (!file) return;
+
+            // 500 KB limit for smooth browser/localStorage handling
+            if (file.size > 500 * 1024) {
+                statusEl.textContent = 'File is larger than 500 KB. Please choose a smaller logo file.';
+                statusEl.className = 'text-[11px] text-red-600 font-medium mt-1';
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedLogoData = e.target.result;
+                uploadedLogoName = file.name;
+
+                previewImg.src = uploadedLogoData;
+                previewImg.classList.remove('hidden');
+                placeholderIcon.classList.add('hidden');
+
+                statusEl.textContent = `Uploaded: ${file.name}`;
+                statusEl.className = 'text-[11px] text-emerald-700 font-semibold mt-1';
+            };
+            reader.readAsDataURL(file);
+        }
+
         function saveStoreSetup(e) {
             e.preventDefault();
 
             const selectedTemplate = document.querySelector('input[name="selectedTemplate"]:checked').value;
-            
+            const rawPlan = localStorage.getItem('selectedPlanData');
+            const planInfo = rawPlan ? JSON.parse(rawPlan) : { planName: 'Small Store', price: 15, billingType: 'One-Time', productLimit: 1500 };
+
             const storeConfig = {
+                plan: planInfo,
                 storeName: document.getElementById('storeName').value,
                 tagline: document.getElementById('storeTagline').value,
                 category: document.getElementById('storeCategory').value,
-                logo: document.getElementById('storeLogo').value,
+                logoFileName: uploadedLogoName,
+                logoDataUrl: uploadedLogoData,
                 whatsapp: document.getElementById('whatsappNo').value,
                 email: document.getElementById('ownerEmail').value,
                 upiId: document.getElementById('upiId').value,
@@ -161,13 +272,9 @@
                 template: selectedTemplate
             };
 
-            // LocalStorage-il data save cheyyunnu
             localStorage.setItem('userStoreConfig', JSON.stringify(storeConfig));
 
-            alert(`Store Configuration Saved Successfully!\n\nStore Name: ${storeConfig.storeName}\nTemplate: ${storeConfig.template.toUpperCase()}`);
-            
-            // Redirection to Dashboard / Admin Panel
-            // window.location.href = 'dashboard.html';
+            alert(`Store Setup Saved!\n\nStore Name: ${storeConfig.storeName}\nPlan: ${planInfo.planName}\nLogo: ${uploadedLogoName || 'Not uploaded yet'}\nTemplate: ${storeConfig.template.toUpperCase()}`);
         }
     </script>
 </body>
