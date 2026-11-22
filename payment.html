@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment - StoreBuilder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen py-10 px-4">
+
+    <div class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-extrabold text-slate-900">Complete Plan Activation</h1>
+            <p class="text-slate-600 mt-1">Review your store summary and submit your payment reference.</p>
+        </div>
+
+        <!-- Step Progress -->
+        <div class="grid grid-cols-3 gap-2 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm mb-8 text-xs sm:text-sm font-semibold">
+            <div class="text-emerald-700 bg-emerald-50 py-2 px-3 rounded-xl text-center">1. Plan Selected</div>
+            <div class="text-emerald-700 bg-emerald-50 py-2 px-3 rounded-xl text-center">2. Store Configured</div>
+            <div class="bg-indigo-600 text-white py-2 px-3 rounded-xl text-center">3. Payment</div>
+        </div>
+
+        <!-- Missing Setup Warning (if someone opens payment.html directly) -->
+        <div id="missingConfigNotice" class="hidden bg-amber-50 border border-amber-200 text-amber-900 p-4 rounded-xl mb-6 text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <span>Store setup details were not found. Complete setup first for accurate store activation.</span>
+            <a href="setup.html" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg text-xs shrink-0 text-center">
+                Go to Setup
+            </a>
+        </div>
+
+        <!-- Order Summary Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                <div class="flex items-center gap-3">
+                    <div id="summaryLogoBox" class="w-12 h-12 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center overflow-hidden">
+                        <i id="summaryLogoIcon" class="fa-solid fa-store text-indigo-600 text-lg"></i>
+                        <img id="summaryLogoImg" src="" alt="Store Logo" class="w-full h-full object-cover hidden">
+                    </div>
+                    <div>
+                        <h2 id="summaryStoreName" class="text-lg font-bold text-slate-900">Your Store</h2>
+                        <p id="summaryTemplate" class="text-xs text-slate-500">Template: Modern Grid</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div id="summaryAmount" class="text-2xl font-extrabold text-indigo-600">₹15</div>
+                    <div id="summaryBilling" class="text-xs font-medium text-slate-500">One-Time</div>
+                </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-3 text-sm text-slate-600">
+                <div><span class="font-semibold text-slate-800">Plan:</span> <span id="summaryPlanName">Small Store</span></div>
+                <div><span class="font-semibold text-slate-800">Product Limit:</span> <span id="summaryLimit">Up to 1,500 Products</span></div>
+                <div><span class="font-semibold text-slate-800">WhatsApp:</span> <span id="summaryWhatsapp">—</span></div>
+                <div><span class="font-semibold text-slate-800">Checkout Mode:</span> <span id="summaryPaymentMode">COD + Online UPI</span></div>
+            </div>
+        </div>
+
+        <!-- Payment Submission Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">UPI Payment Details</h3>
+            <p class="text-sm text-slate-600 mb-6">Pay the exact plan amount to the UPI ID below and enter your 12-digit UTR / Transaction reference.</p>
+
+            <!-- Merchant UPI Box -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                    <span class="text-xs uppercase tracking-wider font-bold text-slate-500">Platform UPI ID</span>
+                    <div id="merchantUpiText" class="text-base font-mono font-bold text-slate-900 mt-0.5">storebuilder@upi</div>
+                </div>
+                <button type="button" onclick="copyMerchantUpi()" class="bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-semibold px-4 py-2 rounded-lg transition">
+                    <i class="fa-regular fa-copy mr-1.5"></i> <span id="copyBtnLabel">Copy UPI ID</span>
+                </button>
+            </div>
+
+            <form id="paymentConfirmForm" onsubmit="submitPaymentProof(event)" novalidate class="space-y-5">
+                <div>
+                    <label for="utrInput" class="block text-sm font-semibold text-slate-700 mb-1">UTR / Transaction ID *</label>
+                    <input type="text" id="utrInput" placeholder="e.g. 612345678901" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <p id="utrError" class="hidden text-xs text-red-600 font-medium mt-1">Enter a valid UTR / Transaction ID (at least 6 characters).</p>
+                </div>
+
+                <div>
+                    <label for="payerNameInput" class="block text-sm font-semibold text-slate-700 mb-1">Payer Name (Optional)</label>
+                    <input type="text" id="payerNameInput" placeholder="Name shown on UPI receipt" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <a href="setup.html" class="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-300 text-slate-700 font-semibold text-center hover:bg-slate-50 transition">
+                        ← Back to Setup
+                    </a>
+                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-6 rounded-xl shadow transition">
+                        Confirm Payment & Activate Store
+                    </button>
+                </div>
+            </form>
+
+            <!-- Inline Success State -->
+            <div id="paymentSuccessBox" class="hidden mt-6 bg-emerald-50 border border-emerald-200 rounded-xl p-5 text-emerald-900">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-xl mt-0.5"></i>
+                    <div>
+                        <h4 class="font-bold text-base">Payment Reference Recorded</h4>
+                        <p id="paymentSuccessDetails" class="text-sm text-emerald-800 mt-1"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const rawConfig = localStorage.getItem('userStoreConfig');
+            const rawPlan = localStorage.getItem('selectedPlanData');
+
+            if (!rawConfig) {
+                document.getElementById('missingConfigNotice').classList.remove('hidden');
+            }
+
+            let config = null;
+            if (rawConfig) {
+                try { config = JSON.parse(rawConfig); } catch (e) {}
+            }
+
+            const plan = (config && config.plan) || (rawPlan ? JSON.parse(rawPlan) : {
+                planName: 'Small Store',
+                price: 15,
+                billingType: 'One-Time',
+                productLimit: 1500
+            });
+
+            document.getElementById('summaryPlanName').textContent = plan.planName;
+            document.getElementById('summaryAmount').textContent = `₹${plan.price}`;
+            document.getElementById('summaryBilling').textContent =
+                plan.billingType === 'One-Time' ? 'One-Time Payment' : 'Per Month';
+            document.getElementById('summaryLimit').textContent = plan.productLimit === 'Unlimited'
+                ? 'Unlimited Products'
+                : `Up to ${Number(plan.productLimit).toLocaleString()} Products`;
+
+            if (config) {
+                document.getElementById('summaryStoreName').textContent = config.storeName || 'Your Store';
+                document.getElementById('summaryTemplate').textContent = `Template: ${config.template || 'modern'}`;
+                document.getElementById('summaryWhatsapp').textContent = config.whatsapp || '—';
+                document.getElementById('summaryPaymentMode').textContent = config.paymentMode || 'COD + Online UPI';
+
+                if (config.logoDataUrl) {
+                    const img = document.getElementById('summaryLogoImg');
+                    const icon = document.getElementById('summaryLogoIcon');
+                    img.src = config.logoDataUrl;
+                    img.classList.remove('hidden');
+                    icon.classList.add('hidden');
+                }
+            }
+        });
+
+        function copyMerchantUpi() {
+            const upiText = document.getElementById('merchantUpiText').textContent.trim();
+            const label = document.getElementById('copyBtnLabel');
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(upiText).then(() => {
+                    label.textContent = 'Copied!';
+                    setTimeout(() => { label.textContent = 'Copy UPI ID'; }, 2000);
+                });
+            }
+        }
+
+        function submitPaymentProof(e) {
+            e.preventDefault();
+
+            const utrInput = document.getElementById('utrInput');
+            const utrError = document.getElementById('utrError');
+            const utrValue = utrInput.value.trim();
+
+            if (utrValue.length < 6) {
+                utrInput.classList.remove('border-slate-300');
+                utrInput.classList.add('border-red-500', 'bg-red-50/40');
+                utrError.classList.remove('hidden');
+                utrInput.focus();
+                return;
+            }
+
+            utrInput.classList.remove('border-red-500', 'bg-red-50/40');
+            utrInput.classList.add('border-slate-300');
+            utrError.classList.add('hidden');
+
+            const paymentRecord = {
+                utr: utrValue,
+                payerName: document.getElementById('payerNameInput').value.trim(),
+                status: 'Submitted for Verification',
+                submittedAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('storePaymentRecord', JSON.stringify(paymentRecord));
+
+            const successBox = document.getElementById('paymentSuccessBox');
+            const successDetails = document.getElementById('paymentSuccessDetails');
+            successDetails.textContent =
+                `UTR "${utrValue}" has been saved for your store setup. Verification will activate your store dashboard.`;
+            successBox.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
